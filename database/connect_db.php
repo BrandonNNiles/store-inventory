@@ -1,5 +1,5 @@
 <?php
-//mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // connect to database
 try {
@@ -14,7 +14,7 @@ try {
 }
 
 // create database
-$sql = "CREATE DATABASE IF NOT EXISTS store_information";
+$sql = "CREATE DATABASE IF NOT EXISTS CP476";
 if ($conn->query($sql) === TRUE) {
     echo "Database created successfully\n";
     } else {
@@ -128,11 +128,49 @@ $sql = "INSERT INTO PRODUCT(product_id, product_name, product_description, price
 
 $conn->query($sql);
 
+$sql = "INSERT INTO SUPPLIER(supplier_id, supplier_name, supplier_address, phone, mail) VALUES 
+        ('9512', 'Acme Corporation', '123 Main St', 2052888591, 'info@acme-corp.com'),
+        ('8642', 'Xerox Inc.', '456 High St', 5053988414, 'info@xrx.com'),
+        ('3579', 'RedPark Ltd.', '789 Park Ave', 6046832555, 'info@redpark.ca'),
+        ('7890', 'Samsung', '456 Seoul St', 9097634442, 'support@samsung.com'),
+        ('7671', 'LG Electronics', '789 Busan St', 6682865378, 'support@lge.kr'),
+        ('9876', 'Toshiba', '246 Osaka St', 9063780835, 'support@toshiba.co.jp'),
+        ('3456', 'Panasonic', '246 Osaka St', 4438879967, 'support@panasonic.co.jp'),
+        ('8765', 'Philips', '789 Amsterdam St', 61483898670, 'support@philips.au'),
+        ('1357', 'Sharp', '123 Tokyo St', 8047453107, 'support@sharp.co.jp'),
+        ('9144', 'Fujitsu', '456 Tokyo St', 0335567890, 'support@fujitsu.co.jp'),
+        ('8655', 'Dell', '246 Austin St', 5053513181, 'support@dell.com'),
+        ('3592', 'IBM', '456 New York St', 2013359423, 'support@ibm.com'),
+        ('7084', 'Acer', '135 Taipei St', 905926031, 'support@acer.tw'),
+        ('2345', 'MSI', '789 Mofan St', 943299465, 'support@msi.tw'),
+        ('6954', 'Apple', '246 Cupertino St', 2029182132, 'support@apple.com'),
+        ('9794', 'Amazon', '246 Seattle St', 5553438950, 'support@amazon.com'),
+        ('8692', 'Microsoft', '123 Redmond St', 5055490420, 'support@microsoft.com'),
+        ('7807', 'Intel', '2200 Mission College Blvd', 4086467611, 'support@intel.com'),
+        ('8672', 'AMD', '246 Santa Clara St', 3128662043, 'support@amd.com'),
+        ('4567', 'Qualcomm', '456 San Diego St', 447700087231, 'info@qualcomm.co.uk')";
+
+$conn->query($sql);
+
 //$result = $conn->query("SELECT product_id FROM PRODUCT");
 
 $listdbtables = array_column($conn->query('SELECT product_id FROM PRODUCT')->fetch_all(),0);
 print_r($listdbtables);
 
+//prepared statement inserting records into PRODUCT table
+$sql = $conn->prepare("INSERT INTO PRODUCT(product_id, product_name, product_description, price, quantity, product_status, supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$sql->bind_param("sssdiss", $product_id, $product_name, $product_description, $price, $quantity, $product_status, $suplier_id); // “sss" means that $fn, $ln and $email as a string
+$product_id = '1111';
+$product_name = 'Keyboard';
+$product_description = 'wireless keyboard';
+$price = 100.00;
+$quantity = 40;
+$product_status = 'A';
+$suplier_id = '4567';
+$sql->execute();
+
+$listdbtables = array_column($conn->query('SELECT product_id FROM PRODUCT')->fetch_all(),0);
+print_r($listdbtables);
 
 $conn->query("DROP TABLE PRODUCT");
 $conn->close();
