@@ -52,7 +52,7 @@
 </html>
 
 <?php
-    require __DIR__ . '/db.php';
+    require __DIR__ . '/modules/db.php';
 
     if(!array_key_exists("login-fail", $_SESSION)){ //have we failed to login?
         $_SESSION["login-fail"] = 0;
