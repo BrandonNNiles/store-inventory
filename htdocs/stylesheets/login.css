@@ -57,6 +57,7 @@ body{
 .submit-cont{
 	text-align:center;
 	padding-bottom: 10%;
+	position:relative;
 }
 
 .login-submit{
@@ -75,4 +76,12 @@ body{
 .login-submit:hover{
 	outline: 4px solid black;
 	border-radius: 5px;
+}
+
+.error{
+	position:absolute;
+	top:65%;
+	left:0;
+	width:100%;
+	color: red;
 }
