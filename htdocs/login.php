@@ -32,6 +32,15 @@
 </html>
 
 <?php
+
+    //Prevent auth'd users from seeing the login page
+    session_start();
+    if(array_key_exists("auth", $_SESSION)){
+        if($_SESSION["auth"]){
+            header("location:postlogin.php"); //redirect unauthed users
+        }
+    }
+
     if($_POST){
         //Connection info
         $host = "***";
