@@ -52,6 +52,7 @@
 </html>
 
 <?php
+    require __DIR__ . '/db.php';
 
     if(!array_key_exists("login-fail", $_SESSION)){ //have we failed to login?
         $_SESSION["login-fail"] = 0;
@@ -65,13 +66,15 @@
         $password = $_POST['password'];
 
         $db_pass = get_value($username, "user_password");
-        $perms = get_value($username, "permission");
+        $firstname = get_value($username, "first_name");
+        $lastname = get_value($username, "last_name");
 
         if(password_verify($password, $db_pass)) {
             $_SESSION['auth'] = 'true';
             $_SESSION['username'] = $username;
+            $_SESSION["firstname"] = $firstname;
+            $_session["lastname"] = $lastname;
             $_SESSION["login-fail"] = 0;
-            $_SESSION["perms"] = $perms;
             header("location:$postlogin");
         } else {
             login_failed(); //invalid password
@@ -82,57 +85,5 @@
         $_SESSION["login-fail"] = 2;
         header("Refresh:0");
         exit();
-    }
-
-    //Returns a SQLi connection object with set information
-    function sqlconn(){
-        //Connection info
-        $host = "***";
-        $user = "***";
-        $pass = "***";
-        $db = "***";
-        $port = "***";
-
-        $conn = new mysqli($host, $user, $pass, $db, $port);
-        if ($conn -> connect_errno){ //check to see if connection failed
-            echo("Failed to connect to MySQL: " . $conn -> connect_error);
-            exit();
-        }
-        return $conn;
-    }
-
-    //returns a value stored in col_name for a given username
-    function get_value($username, $col_name){
-        $conn = sqlconn();
-
-        //Prepare and bind query
-        $query = $conn->prepare("SELECT * FROM USERS WHERE username = ?");
-        $query->bind_param("s", $username);
-
-        //Execute query statement
-        $query->execute();
-
-        $result = $query->get_result();
-
-        if($result == false){
-            echo("Query failed.");
-            exit();
-        }
-
-        $row = $result->fetch_assoc();
-
-        if($row == NULL){
-            login_failed(); //invalid username
-        } elseif($row == false){
-            echo("Results failed.");
-            exit();
-        }
-
-        $value = $row[$col_name];
-        //Close connections and querries
-        $query->close();
-        $conn->close();
-
-        return $value;
     }
 ?>

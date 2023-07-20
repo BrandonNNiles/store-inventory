@@ -2,6 +2,7 @@
     session_start();
     if(!$_SESSION['auth']){
         header("location:login.php"); //redirect unauthed users
+        exit();
     }
 ?>
 
@@ -18,5 +19,6 @@
     </p>
         <br>
         <a href="logout.php">Log Out</a>
+        <a href="createuser.php">User Creation</a>
     </body>
 </html>
