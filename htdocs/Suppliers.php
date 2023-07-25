@@ -69,7 +69,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
                                             ?>
                                             <form method="POST" action="Form_Processing.php">
                                                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
-                                                <input type="hidden" name="system_id" value="<?php echo $row['supplier_id']; ?>">
+                                                <input type="hidden" name="supplier_id" value="<?php echo $row['supplier_id']; ?>">
                                                 <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_SUPPLIER" action="Form_Processing.php">
                                             </form>
                                         </td>
@@ -148,7 +148,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
 
                                 <label>Supplier ID</label>
                                 <div class="input-group mb-3">
-                                    <input type="number" class="form-control" name="supplier_id" required="required">
+                                    <input type="number" readonly class="form-control" name="supplier_id" required="required">
                                 </div>
 
                                 <label>Supplier Name</label>

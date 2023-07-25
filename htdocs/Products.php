@@ -5,7 +5,6 @@ $result = mysqli_query($conn, $query);
 
 $supplier_query = "SELECT supplier_id FROM SUPPLIER";
 
-
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +73,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
                                             <form method="POST" action="Form_Processing.php">
                                                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
                                                 <input type="hidden" name="system_id" value="<?php echo $row['system_id']; ?>">
-                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE" action="Form_Processing.php">
+                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_PRODUCT" action="Form_Processing.php">
                                             </form>
                                         </td>
                                 </tr>

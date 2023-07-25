@@ -3,28 +3,13 @@
 // File holds all the form processing data
 require_once('server.php');
 
-// Prepared Statements
-$addStatement = $conn->prepare("INSERT INTO PRODUCT(product_id, product_name, product_description, price, quantity, product_status, supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$addStatement->bind_param("issdisi", $product_id, $product_name, $product_desciption, $price, $quanity, $product_status, $supplier_id);
-
-$editStatement = $conn->prepare("UPDATE PRODUCT SET product_id=?, product_name=?, product_description=?, price=?, quantity=?, product_status=?, supplier_id=? WHERE system_id=?");
-$editStatement->bind_param("issdisis",$product_id, $product_name, $product_desciption, $price, $quanity, $product_status, $supplier_id, $system_id);
-
-$deleteStatement = $conn->prepare("DELETE FROM PRODUCT WHERE system_id=?");
-$deleteStatement->bind_param("i", $system_id);
-
-$addSupplier = $conn->prepare("INSERT INTO SUPPLIER(supplier_id, supplier_name, supplier_address, phone, email) VALUES (?, ?, ?, ?, ?");
-$addSupplier->bind_param("sssss", $supplier_id, $supplier_name, $supplier_address, $phone, $email);
-
-$editSupplier = $conn->prepare("UPDATE SUPPLIER SET supplier_id=?, supplier_name=?, supplier_address=?, phone=?, email=? WHERE supplier_id=?");
-$editSupplier->bind_param("sssss", $supplier_id, $supplier_name, $supplier_address, $phone, $email); // Need to add auto-increment here too
-
-$deleteSupplier = $conn->prepare("DELETE FROM SUPPLIER WHERE supplier_id=?");
-$deleteSupplier->bind_param("i", $supplier_id);
-
 
 // Adding a Product Record
 if (isset($_POST ['Add_Product'])){
+
+    // Prepared Statement
+    $addStatement = $conn->prepare("INSERT INTO PRODUCT(product_id, product_name, product_description, price, quantity, product_status, supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $addStatement->bind_param("issdisi", $product_id, $product_name, $product_desciption, $price, $quanity, $product_status, $supplier_id);
 
     // Get all inputs for new record
     $product_id = $_POST['product_id'];
@@ -45,6 +30,10 @@ if (isset($_POST ['Add_Product'])){
     header("location:Products.php");
 }
 else if(isset($_POST['Edit_Product'])){
+
+    // Prepared Statement
+    $editStatement = $conn->prepare("UPDATE PRODUCT SET product_id=?, product_name=?, product_description=?, price=?, quantity=?, product_status=?, supplier_id=? WHERE system_id=?");
+    $editStatement->bind_param("issdisis",$product_id, $product_name, $product_desciption, $price, $quanity, $product_status, $supplier_id, $system_id);
 
     // Get all inputs
     $product_id = $_POST['product_id'];
@@ -67,6 +56,10 @@ else if(isset($_POST['Edit_Product'])){
 }
 else if(isset($_POST['DELETE_PRODUCT'])){
 
+    // Prepared Statement
+    $deleteStatement = $conn->prepare("DELETE FROM PRODUCT WHERE system_id=?");
+    $deleteStatement->bind_param("i", $system_id);
+
     // Get the id of the record
     $system_id = $_POST['system_id'];
 
@@ -78,6 +71,10 @@ else if(isset($_POST['DELETE_PRODUCT'])){
 
 if(isset($_POST['Add_Supplier'])){
     
+    // Prepared Statement
+    $addStatement = $conn->prepare("INSERT INTO SUPPLIER(supplier_id, supplier_name, supplier_address, phone, email) VALUES (?, ?, ?, ?, ?)");
+    $addStatement->bind_param("issss", $supplier_id, $supplier_name, $supplier_address, $phone, $email);
+
     // Get all inputs
     $supplier_id = $_POST['supplier_id'];
     $supplier_name = $_POST['supplier_name'];
@@ -91,12 +88,16 @@ if(isset($_POST['Add_Supplier'])){
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     // Excecute command
-    $addSupplier->execute();
+    $addStatement->execute();
 
     header("location:Suppliers.php");
 }
 else if(isset($_POST['Edit_Supplier'])){
 
+    // Prepared Statement
+    $editStatement = $conn->prepare("UPDATE SUPPLIER SET supplier_name=?, supplier_address=?, phone=?, email=? WHERE supplier_id=?");
+    $editStatement->bind_param("ssssi", $supplier_name, $supplier_address, $phone, $email, $supplier_id);
+
     // Get all inputs
     $supplier_id = $_POST['supplier_id'];
     $supplier_name = $_POST['supplier_name'];
@@ -110,18 +111,22 @@ else if(isset($_POST['Edit_Supplier'])){
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
  
     // Excecute command
-    $editSupplier->execute();
+    $editStatement->execute();
  
     // send back to suppliers page
     header("location:Suppliers.php");
 }
 else if(isset($_POST['DELETE_SUPPLIER'])){
 
+    // Prepared Statement
+    $deleteStatement = $conn->prepare("DELETE FROM SUPPLIER WHERE supplier_id=?");
+    $deleteStatement->bind_param("i", $supplier_id);
+
     // Get supplier Id
     $supplier_id = $_POST['supplier_id'];
 
     // Execute Statment
-    $deleteSupplier->execute();
+    $deleteStatement->execute();
 
     // Send back to suppliers page
     header("location:Suppliers.php");
