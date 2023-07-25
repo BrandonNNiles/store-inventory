@@ -14,13 +14,22 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
 <head>
     <link rel="stylesheet" href="stylesheets/bt.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title>Products</title>
 </head>
 
 <body>
     <div class="bg-dark">
+        <div id="nav-placeholder">
+
+        </div>
+        <script>
+            $(function() {
+                $("#nav-placeholder").load("navbar.html");
+            });
+        </script>
         <div class="container-fluid">
-            <div class="row mt-5">
+            <div class="row">
                 <div class="col-2">
                     <div class="card mt-5">
                         <div class="card-body">
