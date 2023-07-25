@@ -1,4 +1,14 @@
 <?php
+    //Configurables
+    $title = "User Creation"; //title of the page
+    $require_auth = true; //whether or not the user needs to be logged in to see this page
+    $perm_level = 1; //the user's permision level to see the page (requires require_auth = true)
+
+    require __DIR__ . '/modules/authmanager.php';
+    view_redirect($require_auth, $perm_level);
+?>
+
+<?php
 require_once('server.php');
 $query = "select * from SUPPLIER";
 $result = mysqli_query($conn, $query);
@@ -25,7 +35,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
         </div>
         <script>
             $(function() {
-                $("#nav-placeholder").load("navbar.html");
+                $("#nav-placeholder").load("navbar.php");
             });
         </script>
         <div class="container-fluid">

@@ -11,6 +11,14 @@
                 <a class="nav-link" href="/Suppliers.php">Suppliers</a>
                 <a class="nav-link" href="/Admin.php">Admin</a>
             </div>
+            <div class="col-2">
+                <a class="nav-link" href="/logout.php">Logout</a>
+                Logged in as: 
+                <?php 
+                    session_start();
+                    echo($_SESSION["username"])
+                ?>
+            </div>
         </div>
     </div>
 </nav>

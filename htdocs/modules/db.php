@@ -4,11 +4,11 @@
     //Returns a SQLi connection object with set information
     function sqlconn(){
         //Connection info
-        $host = "2.tcp.ngrok.io";
+        $host = "6.tcp.ngrok.io";
         $user = "brandon";
         $pass = "CP476";
         $db = "CP476";
-        $port = "12808";
+        $port = "14812";
 
         $conn = new mysqli($host, $user, $pass, $db, $port);
         if ($conn -> connect_errno){ //check to see if connection failed
