@@ -1,7 +1,8 @@
 <?php
 
 // File holds all the form processing data
-require_once('server.php');
+require __DIR__ . '/db.php';
+$conn = sqlconn();
 
 
 // Adding a Product Record
@@ -27,7 +28,7 @@ if (isset($_POST ['Add_Product'])){
     $addStatement->execute();
 
     // Send Back to products page
-    header("location:Products.php");
+    header("location:../products.php");
 }
 else if(isset($_POST['Edit_Product'])){
 
@@ -51,7 +52,7 @@ else if(isset($_POST['Edit_Product'])){
     $editStatement->execute();
 
     // Send Back to products page
-    header("location:Products.php");
+    header("location:../products.php");
 
 }
 else if(isset($_POST['DELETE_PRODUCT'])){
@@ -66,7 +67,7 @@ else if(isset($_POST['DELETE_PRODUCT'])){
     $deleteStatement->execute();
 
     // Send back to products page
-    header("location:Products.php");
+    header("location:../products.php");
 }
 
 if(isset($_POST['Add_Supplier'])){
@@ -90,7 +91,7 @@ if(isset($_POST['Add_Supplier'])){
     // Excecute command
     $addStatement->execute();
 
-    header("location:Suppliers.php");
+    header("location:../suppliers.php");
 }
 else if(isset($_POST['Edit_Supplier'])){
 
@@ -114,7 +115,7 @@ else if(isset($_POST['Edit_Supplier'])){
     $editStatement->execute();
  
     // send back to suppliers page
-    header("location:Suppliers.php");
+    header("location:../suppliers.php");
 }
 else if(isset($_POST['DELETE_SUPPLIER'])){
 
@@ -129,7 +130,7 @@ else if(isset($_POST['DELETE_SUPPLIER'])){
     $deleteStatement->execute();
 
     // Send back to suppliers page
-    header("location:Suppliers.php");
+    header("location:../suppliers.php");
 }
 
 if (isset($_POST['Add_User'])){
@@ -155,7 +156,7 @@ if (isset($_POST['Add_User'])){
     // Execute
     $addStatement->execute();
 
-    header("location:Admin.php");
+    header("location:../admin.php");
 }
 else if (isset($_POST['Edit_User'])){
     
@@ -182,7 +183,7 @@ else if (isset($_POST['Edit_User'])){
     $editStatement->execute();
 
     // Send back to admin
-    header("location:Admin.php");
+    header("location:../admin.php");
 
 }
 else if (isset($_POST['DELETE_USER'])){
@@ -198,5 +199,5 @@ else if (isset($_POST['DELETE_USER'])){
     $deleteStatement->execute();
 
     // Send back to suppliers page
-    header("location:Admin.php");
+    header("location:../admin.php");
 }

@@ -76,10 +76,10 @@
                                             <?php
                                             $output = $output = $row['id'] . "," . $row['first_name'] . "," . $row['last_name'] . "," . $row['username'] . "," . $row['email'] . "," . $row['permission'];
                                             ?>
-                                            <form method="POST" action="Form_Processing.php">
+                                            <form method="POST" action="/modules/form_Processing.php">
                                                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
                                                 <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_USER" action="Form_Processing.php">
+                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_USER" action="/modules/form_Processing.php">
                                             </form>
                                         </td>
                                 </tr>
@@ -97,7 +97,7 @@
         <div class="modal" id="addModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="POST" id="addForm" action="Form_Processing.php">
+                    <form method="POST" id="addForm" action="/modules/form_Processing.php">
                         <div class="modal-header">
                             <h4 class="modal-title">Add User</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -154,7 +154,7 @@
         <div class="modal" id="editModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="POST" id="editForm" action="Form_Processing.php">
+                <form method="POST" action="/modules/form_Processing.php">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit User</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
