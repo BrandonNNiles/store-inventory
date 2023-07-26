@@ -1,0 +1,31 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background-color: lightgray;
+	font-family: inter, Helvetica, sans-serif;
+}
+
+.back-a{
+    text-decoration: none;
+    display: inline-block;
+    color: white;
+    background-color: #5653FF;
+    width: 40%;
+    font-weight: 600;
+    height: 50%;
+    padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+.back-a:hover{
+	outline: 4px solid black;
+	border-radius: 5px;
+}
+
+.container{
+    width: 100%;
+    text-align: center;
+}
