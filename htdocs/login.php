@@ -33,10 +33,6 @@
                             <p class="login-entry-text">Password</p>
                             <input type="password" class="login-entry-input" name="password">
                         </div>
-                        <div class="login-entry-remember">
-                            <input type="checkbox" id="remember-me" name="remember-me">
-                            <label for="remember-me">Remember Me</label>
-                        </div>
                     </div>
                     <div class="submit-cont">
                         <input type="submit" class="login-submit" value="Sign In">
