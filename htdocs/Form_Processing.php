@@ -131,3 +131,72 @@ else if(isset($_POST['DELETE_SUPPLIER'])){
     // Send back to suppliers page
     header("location:Suppliers.php");
 }
+
+if (isset($_POST['Add_User'])){
+
+    // Prepared Statement
+    $addStatement = $conn->prepare("INSERT INTO USERS(username, first_name, last_name, email, user_password, permission) VALUES (?, ?, ?, ?, ?, ?)");
+    $addStatement->bind_param("sssssi", $username, $first_name, $last_name, $email, $password, $permission);
+
+    // Get info
+    $username = $_POST['username'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = hash('ripemd160',$_POST['password']);
+    $permission = $_POST['permission'];
+
+    // Clean data
+    $username = filter_var($username, FILTER_SANITIZE_STRING);
+    $first_name = filter_var($first_name, FILTER_SANITIZE_STRING);
+    $last_name = filter_var($last_name, FILTER_SANITIZE_STRING);
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    // Execute
+    $addStatement->execute();
+
+    header("location:Admin.php");
+}
+else if (isset($_POST['Edit_User'])){
+    
+    // Prepared Statement
+    $editStatement = $conn->prepare("UPDATE USERS SET username=?, first_name=?, last_name=?, email=?, user_password=?, permission=? WHERE id=?");
+    $editStatement->bind_param("sssssii", $username, $first_name, $last_name, $email, $password, $permission, $id);
+
+    // Get info
+    $id = $_POST['id'];
+    $username = $_POST['username'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = hash('ripemd160',$_POST['password']);
+    $permission = $_POST['permission'];
+
+    // Clean data
+    $username = filter_var($username, FILTER_SANITIZE_STRING);
+    $first_name = filter_var($first_name, FILTER_SANITIZE_STRING);
+    $last_name = filter_var($last_name, FILTER_SANITIZE_STRING);
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    // Execute
+    $editStatement->execute();
+
+    // Send back to admin
+    header("location:Admin.php");
+
+}
+else if (isset($_POST['DELETE_USER'])){
+
+    // Prepared Statement
+    $deleteStatement = $conn->prepare("DELETE FROM USERS WHERE id=?");
+    $deleteStatement->bind_param("i", $id);
+
+    // Get supplier Id
+    $id = $_POST['id'];
+
+    // Execute Statment
+    $deleteStatement->execute();
+
+    // Send back to suppliers page
+    header("location:Admin.php");
+}

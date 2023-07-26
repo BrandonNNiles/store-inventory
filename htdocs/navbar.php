@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light"  style="background-color: #010e18;" >
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #010e18;">
     <div class="container-fluid">
         <a class="navbar-brand">CP476</a>
         <button class="navbar-toggler" type="button" data-mdb-toggle="collapse">
@@ -11,13 +11,15 @@
                 <a class="nav-link" href="/Suppliers.php">Suppliers</a>
                 <a class="nav-link" href="/Admin.php">Admin</a>
             </div>
-            <div class="col-2">
-                <a class="nav-link" href="/logout.php">Logout</a>
-                Logged in as: 
-                <?php 
-                    session_start();
-                    echo($_SESSION["username"])
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" style="color:red" href="/logout.php">Logout</a>
+                <a class="nav-link">
+                Logged in as:
+                <?php
+                session_start();
+                echo ($_SESSION["username"])
                 ?>
+                </a>
             </div>
         </div>
     </div>

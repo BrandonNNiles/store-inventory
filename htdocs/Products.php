@@ -1,4 +1,5 @@
 <?php
+    
     //Configurables
     $title = "User Creation"; //title of the page
     $require_auth = true; //whether or not the user needs to be logged in to see this page
@@ -56,13 +57,13 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
                         <div class="card-body">
                             <table class="table table-bordered text-center">
                                 <tr class="bg-dark text-white">
-                                    <td> PRODUCT ID </td>
-                                    <td> PRODUCT NAME </td>
-                                    <td> PRODUCT DESCRIPTION </td>
-                                    <td> PRICE </td>
-                                    <td> QUANTITY </td>
-                                    <td> PRODUCT STATUS </td>
-                                    <td> SUPPLIER ID </td>
+                                    <td> Product ID </td>
+                                    <td> Product NAME </td>
+                                    <td> Product Description </td>
+                                    <td> Price </td>
+                                    <td> Quantity </td>
+                                    <td> Product Status </td>
+                                    <td> Supplier ID </td>
                                     <td> EDIT - DELETE</td>
                                 </tr>
                                 <tr>

@@ -1,7 +1,7 @@
 <?php
     //Configurables
     $title = "CP476 Log In"; //title of the page
-    $postlogin = "products.php"; //postlogin redirection
+    $postlogin = "Inventory.php"; //postlogin redirection
 
     //Prevent auth'd users from seeing the login page
     session_start();
