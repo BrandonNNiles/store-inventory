@@ -1,7 +1,6 @@
 <?php
-    
     //Configurables
-    $title = "User Creation"; //title of the page
+    $title = "Products"; //title of the page
     $require_auth = true; //whether or not the user needs to be logged in to see this page
     $perm_level = 1; //the user's permision level to see the page (requires require_auth = true)
 
@@ -10,11 +9,11 @@
 ?>
 
 <?php
-require_once('server.php');
-$query = "select * from PRODUCT";
-$result = mysqli_query($conn, $query);
+    $conn = sqlconn();
+    $query = "select * from PRODUCT";
+    $result = mysqli_query($conn, $query);
 
-$supplier_query = "SELECT supplier_id FROM SUPPLIER";
+    $supplier_query = "SELECT supplier_id FROM SUPPLIER";
 
 ?>
 
@@ -25,7 +24,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
     <link rel="stylesheet" href="stylesheets/bt.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <title>Products</title>
+    <title><?php echo($title)?></title>
 </head>
 
 <body>
@@ -35,7 +34,7 @@ $supplier_query = "SELECT supplier_id FROM SUPPLIER";
         </div>
         <script>
             $(function() {
-                $("#nav-placeholder").load("navbar.php");
+                $("#nav-placeholder").load("components/navbar.php");
             });
         </script>
         <div class="container-fluid">

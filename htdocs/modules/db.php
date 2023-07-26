@@ -10,12 +10,17 @@
         $db = "CP476";
         $port = "14812";
 
-        $conn = new mysqli($host, $user, $pass, $db, $port);
-        if ($conn -> connect_errno){ //check to see if connection failed
-            echo("Failed to connect to MySQL: " . $conn -> connect_error);
-            exit();
+        try {
+            $conn = new mysqli($host, $user, $pass, $db, $port);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            $conn->set_charset("utf8mb4");
+            return $conn;
+        } catch(Exception $e){
+            error_log($e->getMessage());
+            exit('Error connecting to database');
         }
-        return $conn;
     }
 
     //returns a value stored in col_name for a given username

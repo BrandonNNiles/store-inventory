@@ -9,7 +9,7 @@
             require __DIR__ . '/db.php';
             $perms = get_value($_SESSION["username"], "permission");
             if($perms < $perm_level){
-                header("location:invalidperms.php");
+                header("location:../redirects/invalidperms.php");
                 exit();
             }
         }

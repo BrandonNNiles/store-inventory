@@ -1,7 +1,6 @@
 <?php
-    
     //Configurables
-    $title = "User Creation"; //title of the page
+    $title = "Inventory"; //title of the page
     $require_auth = true; //whether or not the user needs to be logged in to see this page
     $perm_level = 0; //the user's permision level to see the page (requires require_auth = true)
 
@@ -10,9 +9,9 @@
 ?>
 
 <?php
-require_once('server.php');
-$query = "SELECT PRODUCT.product_id, PRODUCT.product_name, PRODUCT.quantity, PRODUCT.price, PRODUCT.product_status, SUPPLIER.supplier_name FROM PRODUCT INNER JOIN SUPPLIER ON PRODUCT.supplier_id=SUPPLIER.supplier_id";
-$result = mysqli_query($conn, $query);
+    $conn = sqlconn();
+    $query = "SELECT PRODUCT.product_id, PRODUCT.product_name, PRODUCT.quantity, PRODUCT.price, PRODUCT.product_status, SUPPLIER.supplier_name FROM PRODUCT INNER JOIN SUPPLIER ON PRODUCT.supplier_id=SUPPLIER.supplier_id";
+    $result = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="stylesheets/bt.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <title>Inventory</title>
+    <title><?php echo($title)?></title>
 </head>
 
 <body>
@@ -32,7 +31,7 @@ $result = mysqli_query($conn, $query);
         </div>
         <script>
             $(function() {
-                $("#nav-placeholder").load("navbar.php");
+                $("#nav-placeholder").load("components/navbar.php");
             });
         </script>
         <div class="container-fluid">
