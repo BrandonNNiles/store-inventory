@@ -53,7 +53,7 @@
                 <div class="col-10">
                     <div class="card mt-5 ">
                         <div class="card-header">
-                            <h2 class="display-6 text-center">Product Table</h2>
+                            <h2 class="display-6 text-center">Products</h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered text-center">

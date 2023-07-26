@@ -41,7 +41,7 @@
                 <div class="col">
                     <div class="card mt-5 ">
                         <div class="card-header">
-                            <h2 class="display-6 text-center">Inventory Table</h2>
+                            <h2 class="display-6 text-center">Inventory</h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered text-center">

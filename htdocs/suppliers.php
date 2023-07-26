@@ -51,7 +51,7 @@
                 <div class="col-10">
                     <div class="card mt-5 ">
                         <div class="card-header">
-                            <h2 class="display-6 text-center">Supplier Table</h2>
+                            <h2 class="display-6 text-center">Suppliers</h2>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered text-center">
