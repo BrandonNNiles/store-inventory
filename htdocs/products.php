@@ -25,6 +25,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <title><?php echo($title)?></title>
+    <link rel="icon" type="image/png" href="resources/images/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/resources/images/favicon-16x16.png" sizes="16x16" />
 </head>
 
 <body>
