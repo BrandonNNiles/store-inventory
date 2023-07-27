@@ -21,7 +21,7 @@ if (isset($_POST['search'])) {
     $result = mysqli_query($conn, $query);
 }
 
-if (isset($_POST['showAll'])){
+if (isset($_POST['showAll'])) {
     $query = "select * from PRODUCT";
     $result = mysqli_query($conn, $query);
 }
@@ -56,10 +56,12 @@ if (isset($_POST['showAll'])){
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="text-center">
-                                <form action="products.php" method="POST">
-                                    <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                <div class="btn-toolbar">
+                                    <form action="/products.php" method="POST">
+                                        <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                    </form>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
-                                </form>
+                                </div>
                                 <form action="products.php" method="POST">
                                     <div class="input-group mb-3 mt-3">
                                         <input type="text" class="form-control" name="filter">
@@ -109,10 +111,10 @@ if (isset($_POST['showAll'])){
                                         <?php
                                             $output = $output = $row['system_id'] . "," . $row['product_id'] . "," . $row['product_name'] . "," . $row['product_description'] . "," . $row['price'] . "," . $row['quantity'] . "," . $row['product_status'] . "," . $row['supplier_id'];
                                         ?>
-                                        <form method="POST" action="Form_Processing.php">
+                                        <form method="POST" action="modules/form_processing.php">
                                             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
                                             <input type="hidden" name="system_id" value="<?php echo $row['system_id']; ?>">
-                                            <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_PRODUCT" action="Form_Processing.php">
+                                            <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_PRODUCT" action="modules/form_processing.php">
                                         </form>
                                     </td>
                                     </tr>
@@ -131,7 +133,7 @@ if (isset($_POST['showAll'])){
         <div class="modal" id="addModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="POST" id="addForm" action="Form_Processing.php">
+                    <form method="POST" id="addForm" action="modules/form_processing.php">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -210,7 +212,7 @@ if (isset($_POST['showAll'])){
         <div class="modal" id="editModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form method="POST" id="editForm" action="Form_Processing.php">
+                    <form method="POST" id="editForm" action="modules/form_processing.php">
                         <div class="modal-header">
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

@@ -55,10 +55,12 @@ if (isset($_POST['showAll'])) {
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="text-center">
-                                <form action="admin.php" method="POST">
-                                    <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                <div class="btn-toolbar">
+                                    <form action="admin.php" method="POST">
+                                        <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                    </form>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
-                                </form>
+                                </div>
                                 <form action="admin.php" method="POST">
                                     <div class="input-group mb-3 mt-3">
                                         <input type="text" class="form-control" name="filter">
