@@ -1,18 +1,30 @@
 <?php
-    //Configurables
-    $title = "Suppliers Test"; //title of the page
-    $require_auth = true; //whether or not the user needs to be logged in to see this page
-    $perm_level = 1; //the user's permision level to see the page (requires require_auth = true)
+//Configurables
+$title = "Suppliers Test"; //title of the page
+$require_auth = true; //whether or not the user needs to be logged in to see this page
+$perm_level = 1; //the user's permision level to see the page (requires require_auth = true)
 
-    require __DIR__ . '/modules/authmanager.php';
-    view_redirect($require_auth, $perm_level);
+require __DIR__ . '/modules/authmanager.php';
+view_redirect($require_auth, $perm_level);
 ?>
 
 <?php
-    $conn = sqlconn();
+$conn = sqlconn();
+$supplier_query = "SELECT supplier_id FROM SUPPLIER";
+
+if (isset($_POST['search'])) {
+    $filter = $_POST['filter'];
+    $query = "SELECT * FROM SUPPLIER WHERE supplier_name LIKE '%$filter%'";
+    $result = mysqli_query($conn, $query);
+} else {
     $query = "select * from SUPPLIER";
     $result = mysqli_query($conn, $query);
-    $supplier_query = "SELECT supplier_id FROM SUPPLIER";
+}
+
+if (isset($_POST['showAll'])){
+    $query = "select * from SUPPLIER";
+    $result = mysqli_query($conn, $query);
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +34,7 @@
     <link rel="stylesheet" href="stylesheets/bt.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <title><?php echo($title)?></title>
+    <title><?php echo ($title) ?></title>
     <link rel="icon" type="image/png" href="resources/images/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/resources/images/favicon-16x16.png" sizes="16x16" />
 </head>
@@ -43,7 +55,16 @@
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="text-center">
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                <form action="suppliers.php" method="POST">
+                                    <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                </form>
+                                <form action="suppliers.php" method="POST">
+                                    <div class="input-group mb-3 mt-3">
+                                        <input type="text" class="form-control" name="filter">
+                                        <input class="btn btn-primary" name="search" type="submit" value="Search">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -53,7 +74,7 @@
                         <div class="card-header">
                             <h2 class="display-6 text-center">Suppliers</h2>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="default-table">
                             <table class="table table-bordered text-center">
                                 <tr class="bg-dark text-white">
                                     <td> Supplier ID </td>
@@ -65,25 +86,33 @@
                                 </tr>
                                 <tr>
                                     <?php
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    if (mysqli_num_rows($result) < 1) {
                                     ?>
-                                        <td><?php echo $row['supplier_id']; ?></td>
-                                        <td><?php echo $row['supplier_name']; ?></td>
-                                        <td><?php echo $row['supplier_address']; ?></td>
-                                        <td><?php echo $row['phone']; ?></td>
-                                        <td><?php echo $row['email']; ?></td>
-                                        <td>
-                                            <?php
-                                            $output = $output = $row['supplier_id'] . "," . $row['supplier_name'] . "," . $row['supplier_address'] . "," . $row['phone'] . "," . $row['email'];
-                                            ?>
-                                            <form method="POST" action="Form_Processing.php">
-                                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
-                                                <input type="hidden" name="supplier_id" value="<?php echo $row['supplier_id']; ?>">
-                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_SUPPLIER" action="Form_Processing.php">
-                                            </form>
-                                        </td>
+                                <tr>
+                                    <td colspan="6">No Record Found
                                 </tr>
+                                <?php
+                                    } else {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <td><?php echo $row['supplier_id']; ?></td>
+                                    <td><?php echo $row['supplier_name']; ?></td>
+                                    <td><?php echo $row['supplier_address']; ?></td>
+                                    <td><?php echo $row['phone']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td>
+                                        <?php
+                                            $output = $output = $row['supplier_id'] . "," . $row['supplier_name'] . "," . $row['supplier_address'] . "," . $row['phone'] . "," . $row['email'];
+                                        ?>
+                                        <form method="POST" action="Form_Processing.php">
+                                            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
+                                            <input type="hidden" name="supplier_id" value="<?php echo $row['supplier_id']; ?>">
+                                            <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_SUPPLIER" action="Form_Processing.php">
+                                        </form>
+                                    </td>
+                                    </tr>
                             <?php
+                                        }
                                     }
                             ?>
                             </table>

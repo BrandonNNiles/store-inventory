@@ -1,18 +1,30 @@
 <?php
-    
-    //Configurables
-    $title = "Admin"; //title of the page
-    $require_auth = true; //whether or not the user needs to be logged in to see this page
-    $perm_level = 2; //the user's permision level to see the page (requires require_auth = true)
 
-    require __DIR__ . '/modules/authmanager.php';
-    view_redirect($require_auth, $perm_level);
+//Configurables
+$title = "Admin"; //title of the page
+$require_auth = true; //whether or not the user needs to be logged in to see this page
+$perm_level = 2; //the user's permision level to see the page (requires require_auth = true)
+
+require __DIR__ . '/modules/authmanager.php';
+view_redirect($require_auth, $perm_level);
 ?>
 
 <?php
-    $conn = sqlconn();
+$conn = sqlconn();
+
+if (isset($_POST['search'])) {
+    $filter = $_POST['filter'];
+    $query = "SELECT * FROM USERS WHERE first_name LIKE '%$filter%'";
+    $result = mysqli_query($conn, $query);
+} else {
     $query = "select * from USERS";
     $result = mysqli_query($conn, $query);
+}
+
+if (isset($_POST['showAll'])) {
+    $query = "select * from USERS";
+    $result = mysqli_query($conn, $query);
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +34,7 @@
     <link rel="stylesheet" href="stylesheets/bt.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <title><?php echo($title)?></title>
+    <title><?php echo ($title) ?></title>
     <link rel="icon" type="image/png" href="resources/images/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="/resources/images/favicon-16x16.png" sizes="16x16" />
 </head>
@@ -43,7 +55,16 @@
                     <div class="card mt-5">
                         <div class="card-body">
                             <div class="text-center">
-                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                <form action="admin.php" method="POST">
+                                    <input class="btn btn-primary" name="showAll" type="submit" value="Show All">
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                </form>
+                                <form action="admin.php" method="POST">
+                                    <div class="input-group mb-3 mt-3">
+                                        <input type="text" class="form-control" name="filter">
+                                        <input class="btn btn-primary" name="search" type="submit" value="Search">
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -65,25 +86,33 @@
                                 </tr>
                                 <tr>
                                     <?php
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    if (mysqli_num_rows($result) < 1) {
                                     ?>
-                                        <td><?php echo $row['first_name']; ?></td>
-                                        <td><?php echo $row['last_name']; ?></td>
-                                        <td><?php echo $row['username']; ?></td>
-                                        <td><?php echo $row['email']; ?></td>
-                                        <td><?php echo $row['permission']; ?></td>
-                                        <td>
-                                            <?php
-                                            $output = $output = $row['id'] . "," . $row['first_name'] . "," . $row['last_name'] . "," . $row['username'] . "," . $row['email'] . "," . $row['permission'];
-                                            ?>
-                                            <form method="POST" action="/modules/form_Processing.php">
-                                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
-                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_USER" action="/modules/form_Processing.php">
-                                            </form>
-                                        </td>
+                                <tr>
+                                    <td colspan="6">No Record Found
                                 </tr>
+                                <?php
+                                    } else {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <td><?php echo $row['first_name']; ?></td>
+                                    <td><?php echo $row['last_name']; ?></td>
+                                    <td><?php echo $row['username']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['permission']; ?></td>
+                                    <td>
+                                        <?php
+                                            $output = $output = $row['id'] . "," . $row['first_name'] . "," . $row['last_name'] . "," . $row['username'] . "," . $row['email'] . "," . $row['permission'];
+                                        ?>
+                                        <form method="POST" action="/modules/form_Processing.php">
+                                            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-whatever="<?php echo $output ?>">EDIT</a>
+                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                            <input class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this record?');" value="DELETE" name="DELETE_USER" action="/modules/form_Processing.php">
+                                        </form>
+                                    </td>
+                                    </tr>
                             <?php
+                                        }
                                     }
                             ?>
                             </table>
@@ -123,7 +152,7 @@
 
                                 <label>Password</label>
                                 <div class="input-group mb-3">
-                                    <input type="password"  class="form-control" name="password" required="required">
+                                    <input type="password" class="form-control" name="password" required="required">
                                 </div>
 
                                 <label>Email</label>
@@ -154,7 +183,7 @@
         <div class="modal" id="editModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                <form method="POST" action="/modules/form_Processing.php">
+                    <form method="POST" action="/modules/form_Processing.php">
                         <div class="modal-header">
                             <h4 class="modal-title">Edit User</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -182,7 +211,7 @@
 
                                 <label>Password</label>
                                 <div class="input-group mb-3">
-                                    <input type="password"  class="form-control" name="password" required="required">
+                                    <input type="password" class="form-control" name="password" required="required">
                                 </div>
 
                                 <label>Email</label>
